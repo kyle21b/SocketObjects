@@ -29,6 +29,7 @@ ArgValue retainCount(SocketObject *self, Selector selector, ArgValue arg){
 }
 
 ArgValue init(SocketObject *self, Selector selector, ArgValue arg){
+    self->retainCount = 0;
     return voidArgValue;
 }
 

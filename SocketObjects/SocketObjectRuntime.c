@@ -73,7 +73,6 @@ SocketObject *allocInstance(Class class) {
     SocketObject *object = malloc(sizeof(struct SocketObject));
     object->class = class;
     object->listenPort = nextPortNumber();
-    object->retainCount = 0;
     
     msg_invoke(object, "init", voidArgValue);
     msg_listen(object);
