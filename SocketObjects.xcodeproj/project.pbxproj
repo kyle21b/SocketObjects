@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		A789311E1AD86C0600462FF8 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = A789311D1AD86C0600462FF8 /* main.c */; };
+		A78931261AD86C1800462FF8 /* SocketObject.c in Sources */ = {isa = PBXBuildFile; fileRef = A78931241AD86C1800462FF8 /* SocketObject.c */; };
+		A78931291AD8711700462FF8 /* SocketObjectRuntime.c in Sources */ = {isa = PBXBuildFile; fileRef = A78931271AD8711700462FF8 /* SocketObjectRuntime.c */; };
+		A789312C1AD871EF00462FF8 /* Util.c in Sources */ = {isa = PBXBuildFile; fileRef = A789312A1AD871EF00462FF8 /* Util.c */; };
+		A7C49EB31AD9F40F00C1F7ED /* Counter.c in Sources */ = {isa = PBXBuildFile; fileRef = A7C49EB11AD9F40F00C1F7ED /* Counter.c */; };
+		A7C49EB61AD9F6B900C1F7ED /* Object.c in Sources */ = {isa = PBXBuildFile; fileRef = A7C49EB41AD9F6B900C1F7ED /* Object.c */; };
+		A7C49EB91AD9F6C300C1F7ED /* Classes.c in Sources */ = {isa = PBXBuildFile; fileRef = A7C49EB71AD9F6C300C1F7ED /* Classes.c */; };
+		A7C49EBC1ADA24CB00C1F7ED /* Particle.c in Sources */ = {isa = PBXBuildFile; fileRef = A7C49EBA1ADA24CB00C1F7ED /* Particle.c */; };
+		A7C49ED51ADA553900C1F7ED /* csapp.c in Sources */ = {isa = PBXBuildFile; fileRef = A7C49ED31ADA553900C1F7ED /* csapp.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +33,23 @@
 /* Begin PBXFileReference section */
 		A789311A1AD86C0600462FF8 /* SocketObjects */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SocketObjects; sourceTree = BUILT_PRODUCTS_DIR; };
 		A789311D1AD86C0600462FF8 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		A78931241AD86C1800462FF8 /* SocketObject.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SocketObject.c; sourceTree = "<group>"; };
+		A78931251AD86C1800462FF8 /* SocketObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketObject.h; sourceTree = "<group>"; };
+		A78931271AD8711700462FF8 /* SocketObjectRuntime.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SocketObjectRuntime.c; sourceTree = "<group>"; };
+		A78931281AD8711700462FF8 /* SocketObjectRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketObjectRuntime.h; sourceTree = "<group>"; };
+		A789312A1AD871EF00462FF8 /* Util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Util.c; sourceTree = "<group>"; };
+		A789312B1AD871EF00462FF8 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		A789312E1AD8A2EB00462FF8 /* SocketObject_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SocketObject_Private.h; sourceTree = "<group>"; };
+		A7C49EB11AD9F40F00C1F7ED /* Counter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Counter.c; sourceTree = "<group>"; };
+		A7C49EB21AD9F40F00C1F7ED /* Counter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Counter.h; sourceTree = "<group>"; };
+		A7C49EB41AD9F6B900C1F7ED /* Object.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Object.c; sourceTree = "<group>"; };
+		A7C49EB51AD9F6B900C1F7ED /* Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Object.h; sourceTree = "<group>"; };
+		A7C49EB71AD9F6C300C1F7ED /* Classes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Classes.c; sourceTree = "<group>"; };
+		A7C49EB81AD9F6C300C1F7ED /* Classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Classes.h; sourceTree = "<group>"; };
+		A7C49EBA1ADA24CB00C1F7ED /* Particle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Particle.c; sourceTree = "<group>"; };
+		A7C49EBB1ADA24CB00C1F7ED /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
+		A7C49ED31ADA553900C1F7ED /* csapp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = csapp.c; sourceTree = "<group>"; };
+		A7C49ED41ADA553900C1F7ED /* csapp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = csapp.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +83,33 @@
 			isa = PBXGroup;
 			children = (
 				A789311D1AD86C0600462FF8 /* main.c */,
+				A789312B1AD871EF00462FF8 /* Util.h */,
+				A789312A1AD871EF00462FF8 /* Util.c */,
+				A78931281AD8711700462FF8 /* SocketObjectRuntime.h */,
+				A78931271AD8711700462FF8 /* SocketObjectRuntime.c */,
+				A78931251AD86C1800462FF8 /* SocketObject.h */,
+				A78931241AD86C1800462FF8 /* SocketObject.c */,
+				A789312E1AD8A2EB00462FF8 /* SocketObject_Private.h */,
+				A7C49ED31ADA553900C1F7ED /* csapp.c */,
+				A7C49ED41ADA553900C1F7ED /* csapp.h */,
+				A7C49EBD1ADA435700C1F7ED /* Classes */,
 			);
 			path = SocketObjects;
+			sourceTree = "<group>";
+		};
+		A7C49EBD1ADA435700C1F7ED /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A7C49EB71AD9F6C300C1F7ED /* Classes.c */,
+				A7C49EB81AD9F6C300C1F7ED /* Classes.h */,
+				A7C49EB41AD9F6B900C1F7ED /* Object.c */,
+				A7C49EB51AD9F6B900C1F7ED /* Object.h */,
+				A7C49EB11AD9F40F00C1F7ED /* Counter.c */,
+				A7C49EB21AD9F40F00C1F7ED /* Counter.h */,
+				A7C49EBA1ADA24CB00C1F7ED /* Particle.c */,
+				A7C49EBB1ADA24CB00C1F7ED /* Particle.h */,
+			);
+			name = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,7 +168,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7C49EB91AD9F6C300C1F7ED /* Classes.c in Sources */,
 				A789311E1AD86C0600462FF8 /* main.c in Sources */,
+				A789312C1AD871EF00462FF8 /* Util.c in Sources */,
+				A78931261AD86C1800462FF8 /* SocketObject.c in Sources */,
+				A7C49EB31AD9F40F00C1F7ED /* Counter.c in Sources */,
+				A7C49EBC1ADA24CB00C1F7ED /* Particle.c in Sources */,
+				A7C49ED51ADA553900C1F7ED /* csapp.c in Sources */,
+				A7C49EB61AD9F6B900C1F7ED /* Object.c in Sources */,
+				A78931291AD8711700462FF8 /* SocketObjectRuntime.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +290,7 @@
 				A78931231AD86C0600462FF8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
