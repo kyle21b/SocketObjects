@@ -38,9 +38,9 @@ struct InstanceMethod {
     Method method;
 };
 
-in_port_t portNumber = 9001;
+in_port_t portNumber = 9000;
 in_port_t nextPortNumber(){
-    if (portNumber >= 10000) portNumber = 9001;
+    if (portNumber >= 10000) portNumber = 9000;
     return portNumber++;
 }
 
@@ -92,6 +92,7 @@ void *_msg_listen(void *arg) {
     SocketObject *obj = arg;
     
     int	sockfd;
+    int optval = 1;
     struct sockaddr_in servaddr;
     
     sockfd = Socket(AF_INET, SOCK_DGRAM, 0);
@@ -100,6 +101,9 @@ void *_msg_listen(void *arg) {
     servaddr.sin_family      = AF_INET;
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
     servaddr.sin_port        = htons(obj->listenPort);
+    
+    /* Eliminates "Address already in use" error from bind. */
+    setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, (const void *)&optval , sizeof(int));
     
     Bind(sockfd, (SA *) &servaddr, sizeof(servaddr));
     

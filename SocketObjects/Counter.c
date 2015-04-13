@@ -10,25 +10,9 @@
 #include "SocketObjectRuntime.h"
 #include <stdlib.h>
 
-ArgValue counter_init(SocketObject *self, Selector selector, ArgValue arg){
-    msg_invoke_super(self, selector, arg);
-    long *count = malloc(sizeof(int));
-    *count = 0;
-    
-    ArgValue counterValue = {count, sizeof(long)};
-    setPropertyValue(self, "count", counterValue);
-    
-    return voidArgValue;
-}
-
 ArgValue increment(SocketObject *self, Selector selector, ArgValue arg){
-    ArgValue value = getPropertyValue(self, "count");
-  
-    long *count = value.value;
-    *count = *count + 1;
-    
-    setPropertyValue(self, "count", value);
-    
+    long count = getLongPropertyValue(self, "count") + 1;
+    setLongPropertyValue(self, "count", count);
     return voidArgValue;
 }
 
@@ -36,7 +20,6 @@ void Counter_init(){
     Class baseClass = getClassWithName("Object");
     
     Class counter = registerClass("Counter", baseClass);
-    registerMethod(counter, "init", counter_init);
     registerProperty(counter, "count");
     registerMethod(counter, "increment", increment);
 
