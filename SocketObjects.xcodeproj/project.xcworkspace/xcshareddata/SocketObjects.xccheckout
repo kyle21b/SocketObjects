@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>AC3C3A1E-6B5A-4C26-9954-D190C1CA2A50</string>
+	<key>IDESourceControlProjectName</key>
+	<string>SocketObjects</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>03F7C09D7FD0411760890715AF18B8926B34665D</key>
+		<string>https://github.com/kyle21b/SocketObjects.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>SocketObjects.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>03F7C09D7FD0411760890715AF18B8926B34665D</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/kyle21b/SocketObjects.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>03F7C09D7FD0411760890715AF18B8926B34665D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>03F7C09D7FD0411760890715AF18B8926B34665D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SocketObjects</string>
+		</dict>
+	</array>
+</dict>
+</plist>

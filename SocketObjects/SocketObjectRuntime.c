@@ -14,6 +14,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <sys/socket.h>
+#include "Util.h"
 
 #include "Classes.h"
 
@@ -228,14 +229,16 @@ ObjectField *fieldWithName(SocketObject *self, const char *fieldName) {
 
 void setPropertyValue(SocketObject *self, const char *fieldName, ArgValue value) {
     ObjectField *field = fieldWithName(self, fieldName);
+    ArgValue valueCopy = {heapcpy(value.value, value.size), value.size};
 
     if (field == NULL) {
         field = malloc(sizeof(struct ObjectField));
         field->name = fieldName;
-        field->value = value;
+        field->value = valueCopy;
         self->fields = listNode(field, self->fields);
     } else {
-        field->value = value;
+        free(field->value.value);
+        field->value = valueCopy;
     }
 }
 
@@ -243,6 +246,35 @@ ArgValue getPropertyValue(SocketObject *self, const char *fieldName) {
     ObjectField *field = fieldWithName(self, fieldName);
     if (field == NULL) return voidArgValue;
     return field->value;
+}
+
+void _setPropertyValue(SocketObject *self, const char *fieldName, void *value, size_t size){
+    ArgValue argValue = {value, size};
+    setPropertyValue(self, fieldName, argValue);
+}
+
+void * _getPropertyValue(SocketObject *self, const char *fieldName, size_t size){
+    ArgValue argValue = getPropertyValue(self, fieldName);
+    if (argValue.size == size) return argValue.value;
+    return NULL;
+}
+
+void setIntPropertyValue(SocketObject *self, const char *fieldName, int value){
+    _setPropertyValue(self, fieldName, &value, sizeof(int));
+}
+int getIntPropertyValue(SocketObject *self, const char *fieldName){
+    int *valuePointer = _getPropertyValue(self, fieldName, sizeof(int));
+    if (valuePointer == NULL) return 0;
+    return *valuePointer;
+}
+
+void setLongPropertyValue(SocketObject *self, const char *fieldName, long value){
+    _setPropertyValue(self, fieldName, &value, sizeof(long));
+}
+long getLongPropertyValue(SocketObject *self, const char *fieldName){
+    long *valuePointer = _getPropertyValue(self, fieldName, sizeof(long));
+    if (valuePointer == NULL) return 0;
+    return *valuePointer;
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -10,26 +10,22 @@
 #include "SocketObject_Private.h"
 
 ArgValue retain(SocketObject *self, Selector selector, ArgValue arg){
-    self->retainCount++;
+    int retainCount = getIntPropertyValue(self, "retainCount") + 1;
+    setIntPropertyValue(self, "retainCount", retainCount);
     return voidArgValue;
 }
 
 ArgValue release(SocketObject *self, Selector selector, ArgValue arg){
-    self->retainCount--;
-    if (self->retainCount <= 0) {
+    int retainCount = getIntPropertyValue(self, "retainCount") - 1;
+    setIntPropertyValue(self, "retainCount", retainCount);
+    if (retainCount <= 0) {
         msg_invoke(self, "deinit", voidArgValue);
         deallocInstance(self);
     }
     return voidArgValue;
 }
 
-ArgValue retainCount(SocketObject *self, Selector selector, ArgValue arg){
-    ArgValue value = {&self->retainCount, sizeof(int)};
-    return value;
-}
-
 ArgValue init(SocketObject *self, Selector selector, ArgValue arg){
-    self->retainCount = 0;
     return voidArgValue;
 }
 
@@ -42,9 +38,8 @@ void Object_init(){
     registerMethod(baseClass, "init", init);
     registerMethod(baseClass, "retain", retain);
     registerMethod(baseClass, "release", release);
-    registerMethod(baseClass, "retainCount", retainCount);
+    registerProperty(baseClass, "retainCount");
     registerMethod(baseClass, "deinit", deinit);
     registerProperty(baseClass, "description");
-    
 }
 

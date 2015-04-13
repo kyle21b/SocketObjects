@@ -31,6 +31,7 @@ struct ArgValue {
 };
 static const ArgValue voidArgValue = {NULL, 0};
 
+void *heapcpy(void *, size_t);
 char *heapstrcpy(const char *str);
 
 char *heapstrcat(const char *str, const char *appendingStr);

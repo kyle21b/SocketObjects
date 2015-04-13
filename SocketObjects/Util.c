@@ -17,6 +17,12 @@ ListNode *listNode(void *value, ListNode *next){
     return node;
 }
 
+void *heapcpy(void *value, size_t size){
+    void *copy = malloc(size);
+    bcopy(value, copy, size);
+    return copy;
+}
+
 char *heapstrcpy(const char *str){
     char *copy = calloc(strlen(str)+1, sizeof(char));
   

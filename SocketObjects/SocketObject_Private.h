@@ -22,7 +22,6 @@ struct SocketObject {
     Class class;
     
     ListNode *fields;
-    int retainCount;
 
     int sockfd;
     
