@@ -39,7 +39,8 @@ Method getMethodWithSelector(Class, Selector);
 
 Selector setterForGetter(Selector getter);
 
-SocketObject *allocClass(Class);
+SocketObject *allocInstance(Class);
+void deallocInstance(SocketObject *);
 
 in_port_t nextPortNumber();
 

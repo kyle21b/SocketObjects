@@ -14,16 +14,12 @@ ArgValue retain(SocketObject *self, Selector selector, ArgValue arg){
     return voidArgValue;
 }
 
-void destroy(SocketObject *self){
-    msg_invoke(self, "deinit", voidArgValue);
-    Pthread_cancel(self->listenThread);
-    Close(self->sockfd);
-    free(self);
-}
-
 ArgValue release(SocketObject *self, Selector selector, ArgValue arg){
     self->retainCount--;
-    if (self->retainCount <= 0) destroy(self);
+    if (self->retainCount <= 0) {
+        msg_invoke(self, "deinit", voidArgValue);
+        deallocInstance(self);
+    }
     return voidArgValue;
 }
 

@@ -69,7 +69,7 @@ void initialize_runtime(){
 }
 
 /////////////////////////////////////////////////////////////////////////////
-SocketObject *allocClass(Class class) {
+SocketObject *allocInstance(Class class) {
     SocketObject *object = malloc(sizeof(struct SocketObject));
     object->class = class;
     object->listenPort = nextPortNumber();
@@ -79,6 +79,12 @@ SocketObject *allocClass(Class class) {
     msg_listen(object);
     
     return object;
+}
+
+void deallocInstance(SocketObject *self){
+    Pthread_cancel(self->listenThread);
+    Close(self->sockfd);
+    free(self);
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -15,15 +15,24 @@ typedef struct SocketObject SocketObject;
 
 SocketObjectRef copyRef(SocketObjectRef ref){
     SocketObjectRef newRef = malloc(sizeof(struct SocketObjectRef));
- //   newRef->to;
-
-    performSelector(ref, "retain", voidArgValue);
+    
+    newRef->to = malloc(sizeof(struct sockaddr_in));
+    bcopy(ref->to, newRef->to, ref->tolen);
+    newRef->tolen = ref->tolen;
+    
+    int clientfd = Socket(AF_INET, SOCK_DGRAM, 0);
+    newRef->sockfd = clientfd;
+    
+    performSelector(newRef, "retain", voidArgValue);
 
     return newRef;
 }
 
 void deleteRef(SocketObjectRef ref){
     performSelector(ref, "release", voidArgValue);
+    
+    Close(ref->sockfd);
+    free(ref->to);
     free(ref);
 }
 
@@ -42,7 +51,7 @@ struct sockaddr_in *localsockaddr(int port) {
 
 SocketObjectRef alloc(Class class){
     
-    SocketObject* object = allocClass(class);
+    SocketObject* object = allocInstance(class);
     
     SocketObjectRef ref = malloc(sizeof(struct SocketObjectRef));
 
