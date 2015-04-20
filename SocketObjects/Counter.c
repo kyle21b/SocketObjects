@@ -7,12 +7,16 @@
 //
 
 #include "Counter.h"
-#include "SocketObjectRuntime.h"
-#include <stdlib.h>
+#include "SocketObject_Private.h"
 
 ArgValue increment(SocketObject *self, Selector selector, ArgValue arg){
     long count = getLongPropertyValue(self, "count") + 1;
     setLongPropertyValue(self, "count", count);
+    return getPropertyValue(self, "count");
+}
+
+ArgValue init(SocketObject *self, Selector selector, ArgValue arg){
+    msg_invoke_super(self, selector, arg);
     return voidArgValue;
 }
 

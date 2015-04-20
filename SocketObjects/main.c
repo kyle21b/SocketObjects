@@ -10,6 +10,7 @@
 #include "SocketObject.h"
 #include "SocketObjectRuntime.h"
 #include <stdlib.h>
+#include <string.h>
 
 int main(int argc, const char * argv[]) {
     // Initialize the classes
@@ -20,19 +21,15 @@ int main(int argc, const char * argv[]) {
     
     while (1) {
         //Tell the counter to increment its value
-        performSelector(object, "increment", voidArgValue);
-        //And ask it for the count
-        ArgValue retval = performSelector(object, "count", voidArgValue);
-       
-        //Get the pointer to the value from the return structure
-        long *valuePointer = retval.value;
+        ArgValue retval = performSelector(object, "increment", voidArgValue);
+
         //Get the actual value
-        long count = *valuePointer;
+        long count = *((long *)retval.value);
         //The return value of the message resides in malloced memory
-        free(valuePointer);
+        free(retval.value);
         
-        //Count off every thousand loops
-        if ((count % 1000) == 0) printf("%ld\n",count);
+        //Count off every ten thousand loops
+        if ((count % 10000) == 0) printf("%ld\n",count);
     }
     
     return 0;

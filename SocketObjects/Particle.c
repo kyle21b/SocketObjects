@@ -7,24 +7,9 @@
 //
 
 #include "Particle.h"
-#include "SocketObjectRuntime.h"
-#include <stdlib.h>
+#include "SocketObject_Private.h"
 
 ArgValue stepFrame(SocketObject *self, Selector selector, ArgValue arg){
-    ArgValue value = getPropertyValue(self, "count");
-    
-    if (value.value == NULL) {
-        int *count = malloc(sizeof(int));
-        *count = 0;
-        value.value = count;
-        value.size = sizeof(int);
-    }
-    
-    int *count = value.value;
-    *count = *count + 1;
-    
-    setPropertyValue(self, "count", value);
-    
     return voidArgValue;
 }
 
@@ -34,5 +19,5 @@ void Particle_init(){
     Class particle = registerClass("Particle", baseClass);
     registerProperty(particle, "position");
     registerProperty(particle, "velocity");
-    registerMethod(particle, "stepFrame",stepFrame);
+    registerMethod(particle, "stepFrame", stepFrame);
 }

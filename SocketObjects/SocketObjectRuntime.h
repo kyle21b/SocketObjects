@@ -24,6 +24,9 @@ ArgValue msg_invoke_super(SocketObject *self, Selector selector, ArgValue arg);
 void setPropertyValue(SocketObject *self, const char *fieldName, ArgValue value);
 ArgValue getPropertyValue(SocketObject *self, const char *fieldName);
 
+void _setPropertyValue(SocketObject *self, const char *fieldName, void *value, size_t size);
+void * _getPropertyValue(SocketObject *self, const char *fieldName, size_t size);
+
 void setIntPropertyValue(SocketObject *self, const char *fieldName, int value);
 int getIntPropertyValue(SocketObject *self, const char *fieldName);
 

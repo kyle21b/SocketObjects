@@ -170,7 +170,8 @@ void msg_recieve(SocketObject *obj) {
 
     if (argsize > 0) {
         value = malloc(argsize);
-        bcopy(message, value, argsize);
+        char *messagePtr = strstr(message+sizeof(char)*(strlen(selector)+1), " ")+sizeof(char);
+        bcopy(messagePtr, value, argsize);
     }
     
     ArgValue arg = {value, argsize};
@@ -217,7 +218,6 @@ ArgValue _dynamicPropertyGet(SocketObject *self, Selector selector, ArgValue arg
     InstanceProperty *property = getPropertyWithSelector(self->class, selector);
     if (property == NULL) return voidArgValue;
     return getPropertyValue(self, property->getter);
-    return voidArgValue;
 }
 
 ObjectField *fieldWithName(SocketObject *self, const char *fieldName) {
