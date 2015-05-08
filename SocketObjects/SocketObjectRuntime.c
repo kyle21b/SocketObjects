@@ -169,17 +169,13 @@ void msg_recieve(SocketObject *obj) {
     char *value = NULL;
 
     if (argsize > 0) {
-        value = malloc(argsize);
-        char *messagePtr = strstr(message+sizeof(char)*(strlen(selector)+1), " ")+sizeof(char);
-        bcopy(messagePtr, value, argsize);
+        value = strstr(message+sizeof(char)*(strlen(selector)+1), " ")+sizeof(char);
     }
     
     ArgValue arg = {value, argsize};
 
     ArgValue result = msg_invoke(obj, selector, arg);
     
-    if (value != NULL) free(value);
-
     char response[MAXLINE];
     sprintf(response, "%zu", result.size);
     size_t length = strlen(response);
