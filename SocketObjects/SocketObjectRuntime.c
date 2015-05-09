@@ -81,10 +81,19 @@ SocketObject *allocInstance(Class class) {
     return object;
 }
 
+void *_deallocInstance(void *arg){
+    SocketObject *obj = arg;
+
+    Pthread_cancel(obj->listenThread);
+    Close(obj->sockfd);
+    free(obj);
+    
+    return NULL;
+}
+
 void deallocInstance(SocketObject *self){
-    Pthread_cancel(self->listenThread);
-    Close(self->sockfd);
-    free(self);
+    pthread_t tid;
+    Pthread_create(&tid, NULL, _deallocInstance, self);
 }
 
 /////////////////////////////////////////////////////////////////////////////
