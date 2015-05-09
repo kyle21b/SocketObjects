@@ -32,5 +32,7 @@ int main(int argc, const char * argv[]) {
         if ((count % 10000) == 0) printf("%ld\n",count);
     }
     
+    deleteRef(object);
+    
     return 0;
 }
