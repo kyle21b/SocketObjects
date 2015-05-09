@@ -15,14 +15,11 @@ ArgValue increment(SocketObject *self, Selector selector, ArgValue arg){
     return getPropertyValue(self, "count");
 }
 
-//<<<<<<< Updated upstream
 ArgValue counter_init(SocketObject *self, Selector selector, ArgValue arg){
     msg_invoke_super(self, selector, arg);
     return voidArgValue;
 }
 
-//=======
-//>>>>>>> Stashed changes
 void Counter_init(){
     Class baseClass = getClassWithName("Object");
     

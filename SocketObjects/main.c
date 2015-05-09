@@ -19,10 +19,10 @@ int main(int argc, const char * argv[]) {
     //Make an instance of a 'Counter'
     SocketObjectRef object = alloc(getClassWithName("CircularCounter"));
     
-    long max = 3000;
+    long max = 10000;
 
-    ArgValue a = {&max, sizeof(max)};
-    performSelector(object, "setMax", a);
+    ArgValue arg = {&max, sizeof(max)};
+    performSelector(object, "setMax", arg);
 
     while (1) {
         //Tell the counter to increment its value
@@ -34,7 +34,7 @@ int main(int argc, const char * argv[]) {
         free(retval.value);
         
         //Count off every ten thousand loops
-        if ((count % 10000) == 0) printf("%ld\n",count);
+        if ((count % 1000) == 0) printf("%ld\n",count);
     }
     
     deleteRef(object);

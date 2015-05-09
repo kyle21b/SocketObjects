@@ -10,6 +10,5 @@
 #define __SocketObjects__CircularCounter__
 
 #include <stdio.h>
-
 void Circular_Counter_init();
 #endif /* defined(__SocketObjects__CircularCounter__) */

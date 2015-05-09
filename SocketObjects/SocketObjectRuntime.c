@@ -206,9 +206,11 @@ ArgValue msg_invoke(SocketObject *self, Selector selector, ArgValue arg){
 }
 
 ArgValue msg_invoke_super(SocketObject *self, Selector selector, ArgValue arg){
-    Method method = getMethodWithSelector(self->class->superClass, selector);
-    if (method != NULL) return method(self,selector,arg);
-    return voidArgValue;
+    Class class = self->class;
+    self->class = self->class->superClass;
+    ArgValue returnValue = msg_invoke(self, selector, arg);
+    self->class = class;
+    return returnValue;
 }
 
 /////////////////////////////////////////////////////////////////////////////

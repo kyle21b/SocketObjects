@@ -7,7 +7,7 @@
 //
 
 #include "Counter.h"
-#include "CiruclarCounter.h"
+#include "CircularCounter.h"
 #include "SocketObject_Private.h"
 
 ArgValue reset(SocketObject *self, Selector selector, ArgValue arg){
@@ -15,14 +15,6 @@ ArgValue reset(SocketObject *self, Selector selector, ArgValue arg){
     return getPropertyValue(self, "count");
 }
 
-//<<<<<<< Updated upstream
-ArgValue counter_init(SocketObject *self, Selector selector, ArgValue arg){
-    msg_invoke_super(self, selector, arg);
-    return voidArgValue;
-}
-
-//=======
-//>>>>>>> Stashed changes
 void Resettable_Counter_init(){
     Class baseClass = getClassWithName("Counter");
   

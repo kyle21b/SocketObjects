@@ -10,26 +10,25 @@
 #include "CircularCounter.h"
 #include "SocketObject_Private.h"
 
-ArgValue increment(SocketObject *self, Selector selector, ArgValue arg){
+ArgValue circular_increment(SocketObject *self, Selector selector, ArgValue arg){
     long count = getLongPropertyValue(self, "count") + 1;
     long max = getLongPropertyValue(self, "max");
-    setLongPropertyValue(self, "count", count % max);
+    long realCount = count % max;
+    setLongPropertyValue(self, "count", realCount);
     return getPropertyValue(self, "count");
 }
 
-//<<<<<<< Updated upstream
-ArgValue counter_init(SocketObject *self, Selector selector, ArgValue arg){
+ArgValue circular_counter_init(SocketObject *self, Selector selector, ArgValue arg){
     msg_invoke_super(self, selector, arg);
-    setLongPropertyValue(max, "max", 100000);
+    setLongPropertyValue(self, "max", 100000);
     return voidArgValue;
 }
 
-//=======
-//>>>>>>> Stashed changes
 void Circular_Counter_init(){
     Class baseClass = getClassWithName("Counter");
   
     Class counter = registerClass("CircularCounter", baseClass);
-    registerMethod(counter, "increment", increment);
-    registerProperty(max, "max");
+    registerMethod(counter, "init", circular_counter_init);
+    registerMethod(counter, "increment", circular_increment);
+    registerProperty(counter, "max");
 }
