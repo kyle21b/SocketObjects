@@ -10,8 +10,12 @@
 
 #include "Object.h"
 #include "Counter.h"
+#include "ResettableCounter.h"
+#include "CircularCounter.h"
 
 void Classes_init(){
     Object_init();
     Counter_init();
+    Resettable_Counter_init();
+    Circular_Counter_init();
 }

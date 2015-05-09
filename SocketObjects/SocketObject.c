@@ -65,15 +65,6 @@ SocketObjectRef alloc(Class class){
     return ref;
 }
 
-/*
-Class getClass(SocketObjectRef ref){
-    
-}
-
-BOOL respondsToSelector(SocketObjectRef ref, Selector selector){
-    
-}*/
-
 ArgValue performSelector(SocketObjectRef ref, Selector selector, ArgValue arg){
     return msg_send(ref, selector, arg);
 }

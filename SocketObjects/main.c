@@ -17,8 +17,13 @@ int main(int argc, const char * argv[]) {
     initialize_runtime();
     
     //Make an instance of a 'Counter'
-    SocketObjectRef object = alloc(getClassWithName("Counter"));
+    SocketObjectRef object = alloc(getClassWithName("CircularCounter"));
     
+    long max = 3000;
+
+    ArgValue a = {&max, sizeof(max)};
+    performSelector(object, "setMax", a);
+
     while (1) {
         //Tell the counter to increment its value
         ArgValue retval = performSelector(object, "increment", voidArgValue);

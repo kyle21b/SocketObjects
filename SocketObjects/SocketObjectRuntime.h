@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include "SocketObject.h"
 #include "Util.h"
+#include <netinet/in.h>
+
 
 /////////////////////////////////////////////////////////////////////////////
 ArgValue msg_send(SocketObjectRef ref, Selector selector, ArgValue arg);
