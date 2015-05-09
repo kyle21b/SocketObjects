@@ -11,6 +11,8 @@
 		A78931261AD86C1800462FF8 /* SocketObject.c in Sources */ = {isa = PBXBuildFile; fileRef = A78931241AD86C1800462FF8 /* SocketObject.c */; };
 		A78931291AD8711700462FF8 /* SocketObjectRuntime.c in Sources */ = {isa = PBXBuildFile; fileRef = A78931271AD8711700462FF8 /* SocketObjectRuntime.c */; };
 		A789312C1AD871EF00462FF8 /* Util.c in Sources */ = {isa = PBXBuildFile; fileRef = A789312A1AD871EF00462FF8 /* Util.c */; };
+		A7AAECF81AFEC3B400C116A3 /* ResettableCounter.c in Sources */ = {isa = PBXBuildFile; fileRef = A7AAECF61AFEC3B400C116A3 /* ResettableCounter.c */; };
+		A7AAECFB1AFEC3BC00C116A3 /* CircularCounter.c in Sources */ = {isa = PBXBuildFile; fileRef = A7AAECF91AFEC3BC00C116A3 /* CircularCounter.c */; };
 		A7C49EB31AD9F40F00C1F7ED /* Counter.c in Sources */ = {isa = PBXBuildFile; fileRef = A7C49EB11AD9F40F00C1F7ED /* Counter.c */; };
 		A7C49EB61AD9F6B900C1F7ED /* Object.c in Sources */ = {isa = PBXBuildFile; fileRef = A7C49EB41AD9F6B900C1F7ED /* Object.c */; };
 		A7C49EB91AD9F6C300C1F7ED /* Classes.c in Sources */ = {isa = PBXBuildFile; fileRef = A7C49EB71AD9F6C300C1F7ED /* Classes.c */; };
@@ -40,6 +42,10 @@
 		A789312A1AD871EF00462FF8 /* Util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Util.c; sourceTree = "<group>"; };
 		A789312B1AD871EF00462FF8 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		A789312E1AD8A2EB00462FF8 /* SocketObject_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SocketObject_Private.h; sourceTree = "<group>"; };
+		A7AAECF61AFEC3B400C116A3 /* ResettableCounter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ResettableCounter.c; sourceTree = "<group>"; };
+		A7AAECF71AFEC3B400C116A3 /* ResettableCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResettableCounter.h; sourceTree = "<group>"; };
+		A7AAECF91AFEC3BC00C116A3 /* CircularCounter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CircularCounter.c; sourceTree = "<group>"; };
+		A7AAECFA1AFEC3BC00C116A3 /* CircularCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularCounter.h; sourceTree = "<group>"; };
 		A7C49EB11AD9F40F00C1F7ED /* Counter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Counter.c; sourceTree = "<group>"; };
 		A7C49EB21AD9F40F00C1F7ED /* Counter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Counter.h; sourceTree = "<group>"; };
 		A7C49EB41AD9F6B900C1F7ED /* Object.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Object.c; sourceTree = "<group>"; };
@@ -108,6 +114,10 @@
 				A7C49EB21AD9F40F00C1F7ED /* Counter.h */,
 				A7C49EBA1ADA24CB00C1F7ED /* Particle.c */,
 				A7C49EBB1ADA24CB00C1F7ED /* Particle.h */,
+				A7AAECF61AFEC3B400C116A3 /* ResettableCounter.c */,
+				A7AAECF71AFEC3B400C116A3 /* ResettableCounter.h */,
+				A7AAECF91AFEC3BC00C116A3 /* CircularCounter.c */,
+				A7AAECFA1AFEC3BC00C116A3 /* CircularCounter.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -173,8 +183,10 @@
 				A789312C1AD871EF00462FF8 /* Util.c in Sources */,
 				A78931261AD86C1800462FF8 /* SocketObject.c in Sources */,
 				A7C49EB31AD9F40F00C1F7ED /* Counter.c in Sources */,
+				A7AAECF81AFEC3B400C116A3 /* ResettableCounter.c in Sources */,
 				A7C49EBC1ADA24CB00C1F7ED /* Particle.c in Sources */,
 				A7C49ED51ADA553900C1F7ED /* csapp.c in Sources */,
+				A7AAECFB1AFEC3BC00C116A3 /* CircularCounter.c in Sources */,
 				A7C49EB61AD9F6B900C1F7ED /* Object.c in Sources */,
 				A78931291AD8711700462FF8 /* SocketObjectRuntime.c in Sources */,
 			);
