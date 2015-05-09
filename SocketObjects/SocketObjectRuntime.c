@@ -73,7 +73,6 @@ void initialize_runtime(){
 SocketObject *allocInstance(Class class) {
     SocketObject *object = malloc(sizeof(struct SocketObject));
     object->class = class;
-    object->listenPort = nextPortNumber();
     
     msg_invoke(object, "init", voidArgValue);
     msg_listen(object);
@@ -100,24 +99,6 @@ void deallocInstance(SocketObject *self){
 void *_msg_listen(void *arg) {
     SocketObject *obj = arg;
     
-    int	sockfd;
-    int optval = 1;
-    struct sockaddr_in servaddr;
-    
-    sockfd = Socket(AF_INET, SOCK_DGRAM, 0);
-    
-    bzero(&servaddr, sizeof(servaddr));
-    servaddr.sin_family      = AF_INET;
-    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    servaddr.sin_port        = htons(obj->listenPort);
-    
-    /* Eliminates "Address already in use" error from bind. */
-    setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, (const void *)&optval , sizeof(int));
-    
-    Bind(sockfd, (SA *) &servaddr, sizeof(servaddr));
-    
-    obj->sockfd = sockfd;
-    
     while (1) {
         msg_recieve(obj);
     }
@@ -126,6 +107,27 @@ void *_msg_listen(void *arg) {
 
 void msg_listen(SocketObject *obj) {
     pthread_t tid;
+    
+    int	sockfd;
+    struct sockaddr_in servaddr;
+    
+    sockfd = Socket(AF_INET, SOCK_DGRAM, 0);
+    
+    int listenPort = nextPortNumber();
+    
+    bzero(&servaddr, sizeof(servaddr));
+    servaddr.sin_family      = AF_INET;
+    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    servaddr.sin_port        = htons(listenPort);
+    
+    while (bind(sockfd, (SA *) &servaddr, sizeof(servaddr)) < 0) {
+        listenPort = nextPortNumber();
+        servaddr.sin_port = htons(listenPort);
+    }
+    
+    obj->listenPort = listenPort;
+    obj->sockfd = sockfd;
+    
     Pthread_create(&tid, NULL, _msg_listen, obj);
     obj->listenThread = tid;
 }
