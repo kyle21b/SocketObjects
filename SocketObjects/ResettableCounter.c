@@ -7,7 +7,7 @@
 //
 
 #include "Counter.h"
-#include "CircularCounter.h"
+#include "ResettableCounter.h"
 #include "SocketObject_Private.h"
 
 ArgValue reset(SocketObject *self, Selector selector, ArgValue arg){

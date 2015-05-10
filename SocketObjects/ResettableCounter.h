@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Kyle Bailey. All rights reserved.
 //
 
-#ifndef __SocketObjects__CircularCounter__
-#define __SocketObjects__CircularCounter__
+#ifndef __SocketObjects__ResettableCounter__
+#define __SocketObjects__ResettableCounter__
 
 #include <stdio.h>
 
 void Resettable_Counter_init();
-#endif /* defined(__SocketObjects__CircularCounter__) */
+#endif /* defined(__SocketObjects__ResettableCounter__) */
