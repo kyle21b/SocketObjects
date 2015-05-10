@@ -17,27 +17,11 @@ int main(int argc, const char * argv[]) {
     initialize_runtime();
     
     //Make an instance of a 'Counter'
-    SocketObjectRef object = alloc(getClassWithName("CircularCounter"));
-    
-    long max = 10000;
-
-    ArgValue arg = {&max, sizeof(max)};
-    performSelector(object, "setMax", arg);
+    SocketObjectRef object = localReferenceToPort(argv[1]);
 
     while (1) {
-        //Tell the counter to increment its value
-        ArgValue retval = performSelector(object, "increment", voidArgValue);
-
-
-
-
-        //Get the actual value
-        long count = *((long *)retval.value);
-        //The return value of the message resides in malloced memory
-        free(retval.value);
-        if (count % 20000 == 0)  performSelector(object,"reset", voidArgValue);
-        //Count off every ten thousand loops
-        if ((count % 1000) == 0) printf("%ld\n",count);
+        getchar();
+        ArgValue retval = performSelector(object, "reset", voidArgValue);
     }
     
     deleteRef(object);

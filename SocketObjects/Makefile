@@ -5,16 +5,20 @@ LDFLAGS = -lpthread
 OBJS = Classes.o Object.o SocketObject.o SocketObjectRuntime.o Util.o csapp.o 
 CLASSES = Counter.o ResettableCounter.o CircularCounter.o
 
-RESETTABLE = main1.o
+RESETCLI = main2.o
+RESETSERV = main1.o
 CIRCULAR = main.o
 
-all: circular resettable
+all: circular reset_server reset_client
 
 circular: $(OBJS) $(CLASSES) $(CIRCULAR)
 	$(CC) $(OBJS) $(CIRCULAR) $(CLASSES) -o circular
 
-resettable: $(OBJS) $(CLASSES) $(RESETTABLE)
-	$(CC) $(OBJS) $(CLASSES) $(RESETTABLE) -o reset
+reset_server: $(OBJS) $(CLASSES) $(RESETSERV)
+	$(CC) $(OBJS) $(CLASSES) $(RESETSERV) -o reset_server
+
+reset_client: $(OBJS) $(CLASSES) $(RESETCLI)
+	$(CC) $(OBJS) $(CLASSES) $(RESETCLI) -o reset_client
 
 Classes.o: Classes.c
 	$(CC) $(CFLAGS) -c Classes.c
@@ -38,5 +42,5 @@ ResettableCounter.o: ResettableCounter.c
 	$(CC) $(CFLAGS) -c ResettableCounter.c
 
 clean:
-	rm -f *~ *.o circular reset_server
+	rm -f *~ *.o circular reset_server reset_client
 
