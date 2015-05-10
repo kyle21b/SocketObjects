@@ -26,10 +26,6 @@ int main(int argc, const char * argv[]) {
         long count = *((long *)retval.value);
         //The return value of the message resides in malloced memory
         free(retval.value);
-        
-
-        if (count % 200000 == 0)  performSelector(object,"reset", voidArgValue);
-
 
         //Count off every ten thousand loops
         if ((count % 10000) == 0) printf("%ld\n",count);
