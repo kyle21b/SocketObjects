@@ -17,12 +17,9 @@ int main(int argc, const char * argv[]) {
     initialize_runtime();
     
     //Make an instance of a 'Counter'
-    SocketObjectRef object = localReferenceToPort(argv[1]);
+    SocketObjectRef object = localReferenceToPort(atoi(argv[1]));
 
-    while (1) {
-        getchar();
-        ArgValue retval = performSelector(object, "reset", voidArgValue);
-    }
+    performSelector(object, "reset", voidArgValue);
     
     deleteRef(object);
     
