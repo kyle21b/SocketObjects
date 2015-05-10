@@ -22,7 +22,7 @@ int main(int argc, const char * argv[]) {
     
     SocketObjectRef otherRef = localReferenceToPort(9000);
     
-    long max = 10000;
+    long max = 100000;
 
     ArgValue arg = {&max, sizeof(max)};
     performSelector(object, "setMax", arg);
@@ -37,7 +37,7 @@ int main(int argc, const char * argv[]) {
         free(retval.value);
         
         //Count off every ten thousand loops
-        if ((count % 1000) == 0) printf("%ld\n",count);
+        if ((count % 10000) == 0) printf("%ld\n",count);
     }
     
     deleteRef(object);
