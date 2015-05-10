@@ -14,8 +14,6 @@
 typedef struct SocketObject SocketObject;
 
 struct sockaddr_in *localsockaddr(int port) {
-    struct hostent *hp = gethostent();
-
     struct sockaddr_in *serveraddr = malloc(sizeof(struct sockaddr_in));
     bzero(serveraddr, sizeof(struct sockaddr_in));
     
