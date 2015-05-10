@@ -12,14 +12,14 @@
 ArgValue retain(SocketObject *self, Selector selector, ArgValue arg){
     int retainCount = getIntPropertyValue(self, "retainCount") + 1;
     setIntPropertyValue(self, "retainCount", retainCount);
-    printf("RetainCount: %d\n",retainCount);
+    printf("RetainCount: %d, Object Id# %d\n", retainCount, self->listenPort);
     return voidArgValue;
 }
 
 ArgValue release(SocketObject *self, Selector selector, ArgValue arg){
     int retainCount = getIntPropertyValue(self, "retainCount") - 1;
     setIntPropertyValue(self, "retainCount", retainCount);
-    printf("RetainCount: %d\n",retainCount);
+    printf("RetainCount: %d, Object Id# %d\n", retainCount, self->listenPort);
     if (retainCount <= 0) {
         msg_invoke(self, "deinit", voidArgValue);
         deallocInstance(self);

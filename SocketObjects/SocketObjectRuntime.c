@@ -99,7 +99,7 @@ void deallocInstance(SocketObject *self){
 void *_msg_listen(void *arg) {
     SocketObject *obj = arg;
     
-    printf("Instance of %s listening on port:%d\n",getClassName(obj->class),obj->listenPort);
+    printf("New %s with Object Id# %d\n",getClassName(obj->class),obj->listenPort);
 
     while (1) {
         msg_recieve(obj);
