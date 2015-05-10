@@ -17,6 +17,7 @@ ArgValue increment(SocketObject *self, Selector selector, ArgValue arg){
 
 ArgValue counter_init(SocketObject *self, Selector selector, ArgValue arg){
     msg_invoke_super(self, selector, arg);
+    setLongPropertyValue(self, "count", 0);
     return voidArgValue;
 }
 
