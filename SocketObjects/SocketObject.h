@@ -28,6 +28,7 @@ typedef ArgValue (*Method)(SocketObject *self, Selector selector, ArgValue arg);
 /////////////////////////////////////////////////////////////////////////////
 SocketObjectRef copyRef(SocketObjectRef ref);
 void deleteRef(SocketObjectRef ref);
+SocketObjectRef localReferenceToPort(int portnumber);
 
 /////////////////////////////////////////////////////////////////////////////
 SocketObjectRef alloc(Class class);

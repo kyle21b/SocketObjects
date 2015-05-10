@@ -13,6 +13,19 @@
 
 typedef struct SocketObject SocketObject;
 
+struct sockaddr_in *localsockaddr(int port) {
+    struct hostent *hp = gethostent();
+
+    struct sockaddr_in *serveraddr = malloc(sizeof(struct sockaddr_in));
+    bzero(serveraddr, sizeof(struct sockaddr_in));
+    
+    serveraddr->sin_family = AF_INET;
+    serveraddr->sin_addr.s_addr = htonl(INADDR_LOOPBACK); /* set destination IP number - localhost, 127.0.0.1*/
+    serveraddr->sin_port = htons(port);
+    
+    return serveraddr;
+}
+
 SocketObjectRef copyRef(SocketObjectRef ref){
     SocketObjectRef newRef = malloc(sizeof(struct SocketObjectRef));
     
@@ -24,7 +37,7 @@ SocketObjectRef copyRef(SocketObjectRef ref){
     newRef->sockfd = clientfd;
     
     performSelector(newRef, "retain", voidArgValue);
-
+    
     return newRef;
 }
 
@@ -36,17 +49,16 @@ void deleteRef(SocketObjectRef ref){
     free(ref);
 }
 
-struct sockaddr_in *localsockaddr(int port) {
-    struct hostent *hp = gethostent();
-
-    struct sockaddr_in *serveraddr = malloc(sizeof(struct sockaddr_in));
-    bzero((char *)serveraddr, sizeof(serveraddr));
-    serveraddr->sin_family = AF_INET;
-    bcopy((char *)hp->h_addr_list[0],
-          (char *)&serveraddr->sin_addr.s_addr, hp->h_length);
-    serveraddr->sin_port = htons(port);
+SocketObjectRef localReferenceToPort(int portnumber){
+    SocketObjectRef ref = malloc(sizeof(struct SocketObjectRef));
     
-    return serveraddr;
+    int clientfd = Socket(AF_INET, SOCK_DGRAM, 0);
+    ref->sockfd = clientfd;
+    ref->to = localsockaddr(portnumber);
+    ref->tolen = sizeof(struct sockaddr_in);
+    
+    performSelector(ref, "retain", voidArgValue);
+    return ref;
 }
 
 SocketObjectRef alloc(Class class){

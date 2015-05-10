@@ -11,6 +11,7 @@
 #include "SocketObjectRuntime.h"
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 int main(int argc, const char * argv[]) {
     // Initialize the classes
@@ -18,6 +19,8 @@ int main(int argc, const char * argv[]) {
     
     //Make an instance of a 'Counter'
     SocketObjectRef object = alloc(getClassWithName("CircularCounter"));
+    
+    SocketObjectRef otherRef = localReferenceToPort(9000);
     
     long max = 10000;
 
