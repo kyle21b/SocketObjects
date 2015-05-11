@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 
+//This is the base class
 void Object_init();
 
 #endif /* defined(__SocketObjects__Object__) */

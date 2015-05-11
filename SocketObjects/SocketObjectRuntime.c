@@ -70,6 +70,7 @@ void initialize_runtime(){
 }
 
 /////////////////////////////////////////////////////////////////////////////
+//Make the instance of the class, and initialize it
 SocketObject *allocInstance(Class class) {
     SocketObject *object = malloc(sizeof(struct SocketObject));
     object->class = class;
@@ -90,12 +91,14 @@ void *_deallocInstance(void *arg){
     return NULL;
 }
 
+//Deallocate the instance after a short delay to ensure the object is done communicating first
 void deallocInstance(SocketObject *self){
     pthread_t tid;
     Pthread_create(&tid, NULL, _deallocInstance, self);
 }
 
 /////////////////////////////////////////////////////////////////////////////
+//Listen loop while the object waits for a message
 void *_msg_listen(void *arg) {
     SocketObject *obj = arg;
     
@@ -107,6 +110,7 @@ void *_msg_listen(void *arg) {
     return NULL;
 }
 
+//Prepares the object to listen and then spawns the new thread that will wait for messages to arrive
 void msg_listen(SocketObject *obj) {
     pthread_t tid;
     
@@ -122,6 +126,7 @@ void msg_listen(SocketObject *obj) {
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
     servaddr.sin_port        = htons(listenPort);
     
+    //Search for an open port
     while (bind(sockfd, (SA *) &servaddr, sizeof(servaddr)) < 0) {
         listenPort = nextPortNumber();
         servaddr.sin_port = htons(listenPort);
@@ -130,11 +135,14 @@ void msg_listen(SocketObject *obj) {
     obj->listenPort = listenPort;
     obj->sockfd = sockfd;
     
+    //Spawn the listening thread
     Pthread_create(&tid, NULL, _msg_listen, obj);
     obj->listenThread = tid;
 }
 
+//Send a message over the network
 ArgValue msg_send(SocketObjectRef ref, Selector selector, ArgValue arg){
+    //First construct the message in the buffer
     char message[MAXLINE];
     sprintf(message, "%s %zu", selector, arg.size);
     
@@ -146,16 +154,19 @@ ArgValue msg_send(SocketObjectRef ref, Selector selector, ArgValue arg){
         length += arg.size + 1;
     }
     
+    //Send it
     sendto(ref->sockfd, message, length, 0, (SA *)ref->to, ref->tolen);
     
     char response[MAXLINE];
-
+    
+    //Read the return value
     recvfrom(ref->sockfd, response, MAXLINE, 0, (SA *)ref->to, &ref->tolen);
     int argsize;
     sscanf(response, "%d", &argsize);
     
     char *value = NULL;
     
+    //If there is an arg, move it to malloced memory else we will return a reference to something on the stack (classic c bug)
     if (argsize > 0) {
         value = malloc(argsize);
         bcopy(strstr(response, " ")+sizeof(char), value, argsize);
@@ -165,6 +176,7 @@ ArgValue msg_send(SocketObjectRef ref, Selector selector, ArgValue arg){
     return returnValue;
 }
 
+//Recieve a message
 void msg_recieve(SocketObject *obj) {
     char message[MAXLINE];
     char selector[MAXLINE];
@@ -174,8 +186,10 @@ void msg_recieve(SocketObject *obj) {
     struct sockaddr_in clientAddr;
     socklen_t clientlen = sizeof(clientAddr);
     
+    //Recieve it
     recvfrom(obj->sockfd, message, MAXLINE, 0, (SA *)&clientAddr, &clientlen);
 
+    //Find out the selector and the arguments
     int argsize;
     sscanf(message, "%s %d", selector, &argsize);
     
@@ -187,6 +201,7 @@ void msg_recieve(SocketObject *obj) {
     
     ArgValue arg = {value, argsize};
 
+    //Invoke the proper function
     ArgValue result = msg_invoke(obj, selector, arg);
     
     char response[MAXLINE];
@@ -199,16 +214,19 @@ void msg_recieve(SocketObject *obj) {
         length += result.size + 1;
     }
     
+    //Send back the return value
     sendto(obj->sockfd, response, length, 0, (SA *)&clientAddr, clientlen);
   
 }
 
+//Look up the proper c function pointer, and invoke the method
 ArgValue msg_invoke(SocketObject *self, Selector selector, ArgValue arg){
     Method method = getMethodWithSelector(self->class, selector);
     if (method != NULL) return method(self,selector,arg);
     return voidArgValue;
 }
 
+//Invoke the method after swizzling the objects class
 ArgValue msg_invoke_super(SocketObject *self, Selector selector, ArgValue arg){
     Class class = self->class;
     self->class = self->class->superClass;
@@ -218,6 +236,7 @@ ArgValue msg_invoke_super(SocketObject *self, Selector selector, ArgValue arg){
 }
 
 /////////////////////////////////////////////////////////////////////////////
+//Sets the argument into the objects field specified by the selector
 ArgValue _dynamicPropertySet(SocketObject *self, Selector selector, ArgValue arg){
     InstanceProperty *property = getPropertyWithSelector(self->class, selector);
     if (property == NULL) return voidArgValue;
@@ -225,12 +244,14 @@ ArgValue _dynamicPropertySet(SocketObject *self, Selector selector, ArgValue arg
     return voidArgValue;
 }
 
+//Gets the argument from the objects field specified by the selector
 ArgValue _dynamicPropertyGet(SocketObject *self, Selector selector, ArgValue arg){
     InstanceProperty *property = getPropertyWithSelector(self->class, selector);
     if (property == NULL) return voidArgValue;
     return getPropertyValue(self, property->getter);
 }
 
+//Returns the field on an object with a specific name
 ObjectField *fieldWithName(SocketObject *self, const char *fieldName) {
     ListNode *node = self->fields;
     while (node != NULL) {
@@ -242,6 +263,7 @@ ObjectField *fieldWithName(SocketObject *self, const char *fieldName) {
     return field;
 }
 
+//Sets a fields value
 void setPropertyValue(SocketObject *self, const char *fieldName, ArgValue value) {
     ObjectField *field = fieldWithName(self, fieldName);
     ArgValue valueCopy = {heapcpy(value.value, value.size), value.size};
@@ -257,12 +279,14 @@ void setPropertyValue(SocketObject *self, const char *fieldName, ArgValue value)
     }
 }
 
+//Gets a fields value
 ArgValue getPropertyValue(SocketObject *self, const char *fieldName) {
     ObjectField *field = fieldWithName(self, fieldName);
     if (field == NULL) return voidArgValue;
     return field->value;
 }
 
+//Helper functions
 void _setPropertyValue(SocketObject *self, const char *fieldName, void *value, size_t size){
     ArgValue argValue = {value, size};
     setPropertyValue(self, fieldName, argValue);
@@ -293,7 +317,7 @@ long getLongPropertyValue(SocketObject *self, const char *fieldName){
 }
 
 /////////////////////////////////////////////////////////////////////////////
-
+//Find a class in the list with the specified name
 Class getClassWithName(const char *name){
     ListNode *node = classList;
     while (node != NULL) {
@@ -304,6 +328,7 @@ Class getClassWithName(const char *name){
     return NULL;
 }
 
+//Register a class with a specified superclass
 Class registerClass(const char *name, Class superClass){
     Class class = malloc(sizeof(struct Class));
     class->name = heapstrcpy(name);
@@ -313,6 +338,7 @@ Class registerClass(const char *name, Class superClass){
     return class;
 }
 
+//Register a property to a class
 BOOL registerProperty(Class class, Selector selector){
     InstanceProperty *instanceProperty = malloc(sizeof(struct InstanceProperty));
     instanceProperty->getter = heapstrcpy(selector);
@@ -325,6 +351,7 @@ BOOL registerProperty(Class class, Selector selector){
     return YES;
 }
 
+//Register a method to a class
 BOOL registerMethod(Class class, Selector selector, Method method){
     InstanceMethod *instanceMethod = malloc(sizeof(struct InstanceMethod));
     instanceMethod->selector = heapstrcpy(selector);
@@ -334,6 +361,7 @@ BOOL registerMethod(Class class, Selector selector, Method method){
     return YES;
 }
 
+//Get the method on a specified class refered to by the selector
 Method getMethodWithSelector(Class class, Selector selector){
     ListNode *node = class->methodList;
     while (node != NULL) {
@@ -345,6 +373,7 @@ Method getMethodWithSelector(Class class, Selector selector){
     return getMethodWithSelector(class->superClass, selector);
 }
 
+//Returns the property field for a given selector, for easily checking the names of the set and get functions
 InstanceProperty *getPropertyWithSelector(Class class, Selector selector){
     ListNode *node = class->propertyList;
     while (node != NULL) {

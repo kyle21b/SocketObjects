@@ -12,12 +12,14 @@
 #include "csapp.h"
 #include "SocketObjectRuntime.h"
 
+//Represents a field in an object
 typedef struct ObjectField ObjectField;
 struct ObjectField {
     const char *name;
     ArgValue value;
 };
 
+//Represents an instance of an object
 struct SocketObject {
     Class class;
     
@@ -29,6 +31,7 @@ struct SocketObject {
     pthread_t listenThread;
 };
 
+//Reference to an object
 struct SocketObjectRef {
     struct sockaddr_in *to;
     socklen_t tolen;

@@ -11,5 +11,6 @@
 
 #include <stdio.h>
 
+//Called by runtime to register classes
 void Classes_init();
 #endif /* defined(__SocketObjects__Classes__) */

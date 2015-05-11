@@ -9,6 +9,9 @@
 #include "Object.h"
 #include "SocketObject_Private.h"
 
+//Base class implementation, implements reference counting for all objects to inherit
+
+//Retain message increases the reference count
 ArgValue retain(SocketObject *self, Selector selector, ArgValue arg){
     int retainCount = getIntPropertyValue(self, "retainCount") + 1;
     setIntPropertyValue(self, "retainCount", retainCount);
@@ -16,6 +19,7 @@ ArgValue retain(SocketObject *self, Selector selector, ArgValue arg){
     return voidArgValue;
 }
 
+//Release message decreases the reference count, and at zero the object is deallocated
 ArgValue release(SocketObject *self, Selector selector, ArgValue arg){
     int retainCount = getIntPropertyValue(self, "retainCount") - 1;
     setIntPropertyValue(self, "retainCount", retainCount);
@@ -35,6 +39,7 @@ ArgValue deinit(SocketObject *self, Selector selector, ArgValue arg){
     return voidArgValue;
 }
 
+//Register the class with the runtime
 void Object_init(){
     Class baseClass = registerClass("Object", NULL);
     registerMethod(baseClass, "init", init);

@@ -13,6 +13,7 @@
 
 typedef struct SocketObject SocketObject;
 
+//Quickly make a local sockaddr_in struct with a given port number
 struct sockaddr_in *localsockaddr(int port) {
     struct sockaddr_in *serveraddr = malloc(sizeof(struct sockaddr_in));
     bzero(serveraddr, sizeof(struct sockaddr_in));
@@ -24,6 +25,7 @@ struct sockaddr_in *localsockaddr(int port) {
     return serveraddr;
 }
 
+//Copy a reference, sending the retain message after completion
 SocketObjectRef copyRef(SocketObjectRef ref){
     SocketObjectRef newRef = malloc(sizeof(struct SocketObjectRef));
     
@@ -39,6 +41,7 @@ SocketObjectRef copyRef(SocketObjectRef ref){
     return newRef;
 }
 
+//Delete a reference, sending the release message
 void deleteRef(SocketObjectRef ref){
     performSelector(ref, "release", voidArgValue);
     
@@ -47,6 +50,7 @@ void deleteRef(SocketObjectRef ref){
     free(ref);
 }
 
+//Returns a refrence to a local object on the specified port
 SocketObjectRef localReferenceToPort(int portnumber){
     SocketObjectRef ref = malloc(sizeof(struct SocketObjectRef));
     
@@ -59,6 +63,7 @@ SocketObjectRef localReferenceToPort(int portnumber){
     return ref;
 }
 
+//Allocates a new object locally, returning a reference
 SocketObjectRef alloc(Class class){
     
     SocketObject* object = allocInstance(class);
@@ -75,10 +80,12 @@ SocketObjectRef alloc(Class class){
     return ref;
 }
 
+//Perform a specified selector by sending a message over the network
 ArgValue performSelector(SocketObjectRef ref, Selector selector, ArgValue arg){
     return msg_send(ref, selector, arg);
 }
 
+//Helper functions
 ArgValue valueForKey(SocketObjectRef ref, const char *key){
     return performSelector(ref, key, voidArgValue);
 }
